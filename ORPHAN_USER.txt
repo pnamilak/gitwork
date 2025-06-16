@@ -1,0 +1,31 @@
+/***** To find orphan\inactive logins*******/
+
+sp_change_users_login @Action='Report'
+
+
+/******To remove orphan user's or logins  ********/
+
+Yes, sp_revokedbaccess can be used to drop users from a database.
+
+Here is an article that gives code to identify Windows Users and SQL Users that are orphaned, and then gives the syntax for using sp_revokedbaccess to drop the unwanted users.
+
+Removing Orphan Users from All databases on SQL Server
+By Gregory A. Larsen
+http://www.databasejournal.com/features/mssql/article.php/1578941
+
+** Note that the code will work with both SQL Server 2000 and SQL Server 2005 **
+
+
+
+sp_revokedbaccess 'Loginname1'
+
+-- If you already have a login id and password for this user,
+-- fix it by doing:
+
+EXEC sp_change_users_login 'Auto_Fix', 'user'
+
+-- If you want to create a new login id and password for
+-- this user, fix it by doing:
+
+EXEC sp_change_users_login 'Auto_Fix', 'user', 'login', 'password'
+
